@@ -1,0 +1,70 @@
+<script>
+  let saldo;
+  let encerrar = "n";
+
+  do {
+    saldo = parseInt(prompt("Digite o saldo inicial da peça:").trim());
+
+    // aqui faço uma validação para garantir que o saldo inicial seja um numero aceitavel
+    // utilizo o isNaN para verificar se é um numero e verifico se é maior ou igual a 0
+    if (isNaN(saldo) || saldo < 0) {
+      alert("Por favor, digite um número inteiro válido e maior ou igual a 0.");
+    }
+  } while (isNaN(saldo) || saldo < 0);
+
+  document.write("Saldo inicial: " + saldo + "<br>");
+
+  // ======= LOOP PRINCIPAL =======
+  //utilizei o .toLowerCase para tratar a entrada do usuario, assim ele pode digitar tanto "n" quanto "N"
+  while (encerrar.toLowerCase() === "n") {
+    let tipo = parseInt(
+      prompt(
+        "Digite '1' para entrada (compra) ou '2' para saída (venda):"
+      ).trim()
+    );
+
+    //aqui verifica se é um numero valido
+    if (tipo !== 1 && tipo !== 2) {
+      alert("Opção inválida! Digite apenas 1 (entrada) ou 2 (saída).");
+      continue;
+    }
+
+    let quantidade = parseInt(prompt("Informe a quantidade:").trim());
+
+    if (isNaN(quantidade) || quantidade <= 0) {
+      alert("Quantidade inválida! Digite um número inteiro maior que 0.");
+      continue;
+    }
+
+    if (tipo === 1) {
+      saldo += quantidade;
+      document.write("Entrada (compra): " + quantidade + "<br>");
+    }
+
+    if (tipo === 2) {
+      if (saldo >= quantidade) {
+        saldo -= quantidade;
+        document.write("Saída (venda): " + quantidade + "<br>");
+      } else {
+        document.write(
+          "Saldo insuficiente para saída de: " + quantidade + "<br>"
+        );
+        alert("Saldo insuficiente!");
+      }
+    }
+
+    document.write("Saldo atual: " + saldo + "<br><br>");
+
+    //toLowerCase para tratar novamente a entrada e o .trim para remover espaços
+    encerrar = prompt("Deseja encerrar? (s/n)").trim().toLowerCase();
+
+    //garante que só aceite s ou n
+    while (encerrar !== "s" && encerrar !== "n") {
+      encerrar = prompt("Digite apenas 's' para sim ou 'n' para não:")
+        .trim()
+        .toLowerCase();
+    }
+  }
+
+  document.write("Sistema encerrado<br>");
+</script>
